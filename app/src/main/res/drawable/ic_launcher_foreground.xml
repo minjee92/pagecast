@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 펼친 책 + 음파 모양의 단순한 런처 아이콘 (108dp 캔버스, 안전 영역 66dp) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 왼쪽 페이지 -->
+    <path
+        android:fillColor="#F5EFE1"
+        android:pathData="M30,40 C36,37 44,37 52,41 L52,72 C44,68 36,68 30,71 Z" />
+    <!-- 오른쪽 페이지 -->
+    <path
+        android:fillColor="#F5EFE1"
+        android:pathData="M56,41 C64,37 72,37 78,40 L78,71 C72,68 64,68 56,72 Z" />
+    <!-- 음파 -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#F2B84B"
+        android:strokeLineCap="round"
+        android:strokeWidth="3"
+        android:pathData="M60,52 L60,60 M66,48 L66,64 M72,51 L72,61" />
+</vector>
