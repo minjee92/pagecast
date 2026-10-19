@@ -79,6 +79,7 @@ class NarrationController(
         _state.update {
             it.copy(
                 bookId = bookId,
+                chapterId = newSegments.firstOrNull()?.chapterId,
                 bookTitle = title,
                 segmentCount = newSegments.size,
                 currentIndex = index,

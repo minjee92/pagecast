@@ -7,6 +7,7 @@ import com.pagecast.app.data.repository.BookRepositoryImpl
 import com.pagecast.app.domain.repository.BookRepository
 import com.pagecast.app.domain.text.SentenceSplitter
 import com.pagecast.app.playback.NarrationController
+import com.pagecast.app.playback.ProgressRecorder
 import com.pagecast.app.tts.TtsEngine
 import com.pagecast.app.tts.android.AndroidTtsEngine
 import kotlinx.coroutines.CoroutineScope
@@ -36,5 +37,9 @@ class AppContainer(context: Context) {
 
     val narrationController: NarrationController by lazy {
         NarrationController(ttsEngine, applicationScope)
+    }
+
+    val progressRecorder: ProgressRecorder by lazy {
+        ProgressRecorder(narrationController, bookRepository, applicationScope)
     }
 }

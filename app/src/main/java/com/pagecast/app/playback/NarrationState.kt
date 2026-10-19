@@ -3,6 +3,7 @@ package com.pagecast.app.playback
 /** 화면과 재생 서비스가 구독하는 낭독 상태. */
 data class NarrationState(
     val bookId: Long? = null,
+    val chapterId: Long? = null,
     val bookTitle: String = "",
     val segmentCount: Int = 0,
     val currentIndex: Int = 0,
