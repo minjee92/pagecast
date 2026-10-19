@@ -12,4 +12,5 @@ fun ImportFailure.messageRes(): Int = when (this) {
     ImportFailure.INVALID_ENCODING -> R.string.import_error_encoding
     ImportFailure.BINARY_CONTENT -> R.string.import_error_binary
     ImportFailure.READ_FAILED -> R.string.import_error_read
+    ImportFailure.UNSUPPORTED_FORMAT -> R.string.import_error_unsupported
 }

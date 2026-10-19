@@ -32,11 +32,11 @@ class LibraryViewModel(
     private val _events = Channel<LibraryEvent>(Channel.BUFFERED)
     val events: Flow<LibraryEvent> = _events.receiveAsFlow()
 
-    fun importTxt(uri: Uri) {
+    fun importFile(uri: Uri) {
         if (_importing.value) return
         _importing.value = true
         viewModelScope.launch {
-            val event = when (val result = importer.importTxt(uri)) {
+            val event = when (val result = importer.importFile(uri)) {
                 is ImportResult.Success -> LibraryEvent.OpenBook(result.bookId)
                 is ImportResult.Failure -> LibraryEvent.ImportFailed(result.reason)
             }

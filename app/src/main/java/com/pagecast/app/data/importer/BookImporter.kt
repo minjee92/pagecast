@@ -2,7 +2,6 @@ package com.pagecast.app.data.importer
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.provider.OpenableColumns
 import com.pagecast.app.domain.model.SourceType
 import com.pagecast.app.domain.repository.BookRepository
 import com.pagecast.app.domain.text.InvalidReason
@@ -29,6 +28,9 @@ enum class ImportFailure {
     INVALID_ENCODING,
     BINARY_CONTENT,
     READ_FAILED,
+
+    /** TXT가 아닌 형식(PDF, DOCX, EPUB, 구글 문서 등). 2c 단계에서 지원 예정. */
+    UNSUPPORTED_FORMAT,
 }
 
 /**
@@ -37,6 +39,7 @@ enum class ImportFailure {
  */
 class BookImporter(
     private val contentResolver: ContentResolver,
+    private val inspector: DocumentInspector,
     private val repository: BookRepository,
     private val splitter: SentenceSplitter,
 ) {
@@ -48,7 +51,9 @@ class BookImporter(
             sourceType = SourceType.PASTE,
         )
 
-    suspend fun importTxt(uri: Uri): ImportResult {
+    suspend fun importFile(uri: Uri): ImportResult {
+        val info = withContext(Dispatchers.IO) { inspector.inspect(uri) }
+        if (!info.isPlainText) return ImportResult.Failure(ImportFailure.UNSUPPORTED_FORMAT)
         val bytes = try {
             withContext(Dispatchers.IO) { readBounded(uri) }
         } catch (e: IOException) {
@@ -59,7 +64,7 @@ class BookImporter(
             return ImportResult.Failure(ImportFailure.READ_FAILED)
         }
         val validation = withContext(Dispatchers.Default) { TextInputValidator.validateFileBytes(bytes) }
-        val title = withContext(Dispatchers.IO) { displayName(uri) }
+        val title = info.displayName
             ?.substringBeforeLast('.')
             ?.let(TextInputValidator::sanitizeTitle)
         return save(validation, title, SourceType.TXT)
@@ -98,14 +103,6 @@ class BookImporter(
             }
             out.toByteArray()
         }
-    }
-
-    private fun displayName(uri: Uri): String? = try {
-        contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) cursor.getString(0) else null
-        }
-    } catch (_: RuntimeException) {
-        null
     }
 
     private fun defaultTitle(firstSentence: String): String =

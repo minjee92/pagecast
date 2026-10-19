@@ -1,7 +1,7 @@
 package com.pagecast.app.ui.library
 
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import com.pagecast.app.data.importer.DocumentInspector
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -61,8 +61,8 @@ fun LibraryScreen(
     val resources = LocalResources.current
     var pendingDelete by remember { mutableStateOf<BookSummary?>(null) }
 
-    val openTxt = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        if (uri != null) viewModel.importTxt(uri)
+    val openTxt = rememberLauncherForActivityResult(OpenDocumentContract()) { uri ->
+        if (uri != null) viewModel.importFile(uri)
     }
 
     LaunchedEffect(viewModel) {
@@ -81,7 +81,7 @@ fun LibraryScreen(
         floatingActionButton = {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ExtendedFloatingActionButton(
-                    onClick = { if (!importing) openTxt.launch(arrayOf("text/plain")) },
+                    onClick = { if (!importing) openTxt.launch(DocumentInspector.PICKER_MIME_TYPES) },
                     icon = { Icon(painterResource(R.drawable.ic_file), contentDescription = null) },
                     text = { Text(stringResource(R.string.library_open_txt)) },
                 )

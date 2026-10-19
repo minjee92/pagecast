@@ -2,6 +2,7 @@ package com.pagecast.app.di
 
 import android.content.Context
 import com.pagecast.app.data.importer.BookImporter
+import com.pagecast.app.data.importer.DocumentInspector
 import com.pagecast.app.data.local.PagecastDatabase
 import com.pagecast.app.data.repository.BookRepositoryImpl
 import com.pagecast.app.domain.repository.BookRepository
@@ -29,7 +30,7 @@ class AppContainer(context: Context) {
     val bookRepository: BookRepository by lazy { BookRepositoryImpl(database.bookDao()) }
 
     val bookImporter: BookImporter by lazy {
-        BookImporter(appContext.contentResolver, bookRepository, SentenceSplitter())
+        BookImporter(appContext.contentResolver, DocumentInspector(appContext), bookRepository, SentenceSplitter())
     }
 
     /** TTS 엔진 교체 지점. 4단계에서 클라우드 엔진 구현체로 바꿀 수 있다. */

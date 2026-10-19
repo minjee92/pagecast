@@ -33,6 +33,7 @@
     <string name="import_error_encoding">UTF-8로 저장된 텍스트 파일이 아닙니다. 파일을 UTF-8로 다시 저장해 주세요.</string>
     <string name="import_error_binary">텍스트 파일이 아닌 것 같습니다.</string>
     <string name="import_error_read">파일을 읽을 수 없습니다.</string>
+    <string name="import_error_unsupported">지금은 TXT 파일만 지원해요. PDF·DOCX·EPUB·구글 문서는 곧 지원할 예정이에요.</string>
 
     <!-- 리더 -->
     <string name="reader_not_found">책을 찾을 수 없습니다.</string>
