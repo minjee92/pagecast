@@ -5,6 +5,7 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.pagecast.app.PagecastApp
+import com.pagecast.app.playback.PlaybackClient
 import com.pagecast.app.ui.importer.ImportViewModel
 import com.pagecast.app.ui.library.LibraryViewModel
 import com.pagecast.app.ui.reader.ReaderViewModel
@@ -26,6 +27,7 @@ object AppViewModelFactory {
                 savedStateHandle = createSavedStateHandle(),
                 repository = container.bookRepository,
                 narration = container.narrationController,
+                playback = PlaybackClient(container.appContext),
             )
         }
     }

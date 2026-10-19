@@ -9,6 +9,10 @@
         </intent>
     </queries>
 
+    <!-- 백그라운드 낭독(미디어 재생 포그라운드 서비스). 미디어 세션 알림은 POST_NOTIFICATIONS 면제 대상이다. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
     <application
         android:name=".PagecastApp"
         android:allowBackup="false"
@@ -30,6 +34,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--
+            Media3 규약상 exported="true"가 필요하다(잠금화면·블루투스 등 외부 컨트롤러 연결).
+            외부 컨트롤러에는 PlaybackService.onConnect에서 재생 관련 명령만 허용한다.
+        -->
+        <service
+            android:name=".playback.PlaybackService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

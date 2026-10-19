@@ -8,6 +8,7 @@ import com.pagecast.app.domain.model.Segment
 import com.pagecast.app.domain.repository.BookRepository
 import com.pagecast.app.playback.NarrationController
 import com.pagecast.app.playback.NarrationState
+import com.pagecast.app.playback.PlaybackClient
 import com.pagecast.app.ui.navigation.ReaderRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ class ReaderViewModel(
     savedStateHandle: SavedStateHandle,
     private val repository: BookRepository,
     private val narration: NarrationController,
+    private val playback: PlaybackClient,
 ) : ViewModel() {
 
     private val bookId: Long = savedStateHandle.toRoute<ReaderRoute>().bookId
@@ -50,19 +52,27 @@ class ReaderViewModel(
         }
     }
 
-    fun onPlayPause() = narration.togglePlayPause()
+    // 재생 명령은 MediaSession을 거쳐 보낸다. 그래야 세션이 재생 상태를 알고
+    // 포그라운드 서비스·알림·오디오 포커스를 함께 관리한다.
+    fun onPlayPause() = playback.send { controller ->
+        if (narration.state.value.isPlaying) controller.pause() else controller.play()
+    }
 
-    fun onNext() = narration.next()
+    fun onNext() = playback.send { it.seekToNext() }
 
-    fun onPrevious() = narration.previous()
+    fun onPrevious() = playback.send { it.seekToPrevious() }
 
-    fun onSpeedChange(speed: Float) = narration.setSpeed(speed)
+    fun onSpeedChange(speed: Float) = playback.send { it.setPlaybackSpeed(speed) }
 
-    fun onSentenceTap(index: Int) = narration.seekTo(index, autoPlay = true)
+    /** 문장 위치 이동은 Media3에 대응 명령이 없으므로 컨트롤러에서 직접 옮기고, 재생만 세션으로 요청한다. */
+    fun onSentenceTap(index: Int) {
+        narration.seekTo(index, autoPlay = false)
+        playback.send { it.play() }
+    }
 
     override fun onCleared() {
-        // 백그라운드 재생 서비스가 생기기 전까지는 화면을 떠나면 낭독을 멈춘다.
-        narration.pause()
+        // 화면을 떠나도 낭독은 서비스에서 계속된다. 컨트롤러 연결만 끊는다.
+        playback.release()
     }
 }
 
