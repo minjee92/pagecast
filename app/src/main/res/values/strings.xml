@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pagecast</string>
+
+    <!-- 공통 -->
+    <string name="action_back">뒤로</string>
+    <string name="action_cancel">취소</string>
+    <string name="action_delete">삭제</string>
+
+    <!-- 서재 -->
+    <string name="library_title">서재</string>
+    <string name="library_empty">아직 책이 없습니다.\n텍스트를 붙여넣거나 TXT 파일을 불러오세요.</string>
+    <string name="library_paste">붙여넣기</string>
+    <string name="library_open_txt">TXT 불러오기</string>
+    <string name="library_sentences">%1$d문장</string>
+    <string name="library_progress">%1$d문장 · %2$d%% 읽음</string>
+    <string name="library_delete_title">책 삭제</string>
+    <string name="library_delete_message">"%1$s"을(를) 삭제할까요? 읽은 위치도 함께 지워집니다.</string>
+    <string name="library_importing">불러오는 중…</string>
+
+    <!-- 붙여넣기 -->
+    <string name="import_title">텍스트 붙여넣기</string>
+    <string name="import_field_title">제목 (선택)</string>
+    <string name="import_field_body">본문 (영어)</string>
+    <string name="import_char_count">%1$s / %2$s자</string>
+    <string name="import_save">저장하고 읽기</string>
+    <string name="import_too_long">%1$s자를 넘는 글은 붙여넣을 수 없습니다. 파일로 저장한 뒤 서재의 \"TXT 불러오기\"를 이용하세요.</string>
+
+    <!-- 불러오기 오류 -->
+    <string name="import_error_empty">읽을 내용이 없습니다.</string>
+    <string name="import_error_too_long">붙여넣기 글자 수 한도를 넘었습니다. TXT 불러오기를 이용하세요.</string>
+    <string name="import_error_file_too_large">파일이 너무 큽니다. 5MB 이하의 TXT 파일만 불러올 수 있습니다.</string>
+    <string name="import_error_encoding">UTF-8로 저장된 텍스트 파일이 아닙니다. 파일을 UTF-8로 다시 저장해 주세요.</string>
+    <string name="import_error_binary">텍스트 파일이 아닌 것 같습니다.</string>
+    <string name="import_error_read">파일을 읽을 수 없습니다.</string>
+    <string name="import_error_unsupported">지금은 TXT 파일만 지원해요. PDF·DOCX·EPUB·구글 문서는 곧 지원할 예정이에요.</string>
+
+    <!-- 리더 -->
+    <string name="reader_not_found">책을 찾을 수 없습니다.</string>
+    <string name="reader_play">재생</string>
+    <string name="reader_pause">일시정지</string>
+    <string name="reader_previous">이전 문장</string>
+    <string name="reader_next">다음 문장</string>
+    <string name="reader_position">문장 %1$d / %2$d</string>
+    <string name="reader_speed">속도 %1$sx</string>
+    <string name="reader_jump_to_current">현재 위치로</string>
+    <string name="reader_tts_settings">TTS 설정 열기</string>
+    <string name="reader_engine_unavailable">TTS 엔진을 사용할 수 없습니다. 설정에서 텍스트 음성 변환 엔진을 확인하세요.</string>
+    <string name="reader_language_unavailable">영어 음성 데이터가 없습니다. 설정의 텍스트 음성 변환에서 영어 음성을 설치하세요.</string>
+    <string name="reader_engine_error">낭독 중 오류가 발생했습니다. 다시 재생해 보세요.</string>
+    <string name="reader_no_word_events">현재 TTS 엔진은 단어 위치를 알려주지 않아 문장만 강조합니다. 단어 강조는 Google TTS 엔진에서 지원됩니다.</string>
+</resources>
